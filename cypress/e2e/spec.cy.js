@@ -24,53 +24,14 @@ it('adds todos', () => {
   // https://on.cypress.io/invoke
   // and confirm the data inside the Redux store
   // using cy-spok plugin
-  cy.window()
-    .its('store')
-    .invoke('getState')
-    .should(
-      spok({
-        todos: {
-          data: [
-            {
-              $topic: 'The second todo',
-              text: 'Learn JavaScript',
-              id: spok.number,
-            },
-            {
-              $topic: 'The first todo',
-              text: 'Learn Cypress',
-              id: spok.number,
-            },
-          ],
-        },
-      }),
-    )
-    // grab the ID of the first todo item
-    // grab the Redux store again and dispatch the remove todos action
-    .its('todos.data.0.id')
-    .then((id) => {
-      cy.window().its('store').invoke('dispatch', removeTodo(id))
-    })
+  //
+  // from the Redux store,
+  // grab the ID of the first todo item
+  // grab the Redux store again and dispatch the remove todos action
+  //
   // once we remove the first todo, the UI should update
   // confirm the UI changes and the single todo remains
-  cy.contains('[data-cy="pending-count"]', '1')
-  cy.contains('[data-cy=todo]', 'Learn Cypress')
+  //
   // get the Redux store again and confirm the data in it
   cy.log('**redux store**')
-  cy.window()
-    .its('store')
-    .invoke('getState')
-    .should(
-      spok({
-        todos: {
-          data: [
-            {
-              $topic: 'The first todo',
-              text: 'Learn Cypress',
-              id: spok.number,
-            },
-          ],
-        },
-      }),
-    )
 })
